@@ -14,11 +14,15 @@ class MainWindow(QMainWindow):
         self.layout_configuration()
 
     def window_configuration(self):
+        from src.config_loader import ConfigLoader
+        self.gui_settings = ConfigLoader.get_gui_settings()
+        print(self.gui_settings)
+
         self.setMinimumSize(
-            WINDOW_WIDTH,
-            WINDOW_HEIGHT
+            self.gui_settings['main_window']['width'],
+            self.gui_settings['main_window']['height']
         )
-        self.setWindowTitle(WINDOW_TITLE)
+        self.setWindowTitle(self.gui_settings['main_window']['title'])
 
     def panels_connect(self):
         from src.gui.widgets.buttons_panel import ButtonsPanel
@@ -26,10 +30,10 @@ class MainWindow(QMainWindow):
         from src.gui.widgets.pendulmum_select_panel import PendulmumSelectPanel
         from src.gui.widgets.data_panel import DataPanel
 
-        self.ButtonsPanel = ButtonsPanel()
-        self.GraphPanel = GraphPanel()
-        self.PendulmumSelectPanel = PendulmumSelectPanel()
-        self.DataPanel = DataPanel()
+        self.ButtonsPanel = ButtonsPanel(self.gui_settings['panels']['buttons_panel'])
+        self.GraphPanel = GraphPanel(self.gui_settings['panels']['graph_panel'])
+        self.PendulmumSelectPanel = PendulmumSelectPanel(self.gui_settings['panels']['pendulmum_select_panel'])
+        self.DataPanel = DataPanel(self.gui_settings['panels']['data_panel'])
 
     def layout_configuration(self):
         central_widget = QWidget()
