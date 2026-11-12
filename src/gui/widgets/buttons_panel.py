@@ -2,19 +2,17 @@ from PyQt6.QtWidgets import (
     QWidget, QHBoxLayout
 )
 
-PANEL_WIDTH = 300
-PANEL_HEIGHT = 50
-
 class ButtonsPanel(QWidget):
     def __init__(self, panel_settings: dict, parent=None):
         super().__init__(parent)
+        self.settings = panel_settings
         self.panel_configuration()
         self.layout_configuration()
 
     def panel_configuration(self):
         self.setMinimumSize(
-            PANEL_WIDTH,
-            PANEL_HEIGHT
+            self.settings['width'],
+            self.settings['height']
         )
 
     def layout_configuration(self):
