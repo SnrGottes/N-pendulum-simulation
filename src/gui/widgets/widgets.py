@@ -4,11 +4,11 @@ from PyQt6.QtWidgets import (
 )
 
 class DataSpinBox(QDoubleSpinBox):
-    def __init__(self, data: dict, parent=None):
+    def __init__(self, values_data: dict, parent=None):
         super().__init__(parent)
-        self.setRange(data['min_value'], data['max_value'])
-        self.setValue(data['value'])
-        self.setSingleStep(data['step'])
+        self.setRange(values_data['min_value'], values_data['max_value'])
+        self.setValue(values_data['value'])
+        self.setSingleStep(values_data['step'])
         self.setObjectName('data_spin_box')
 
 class Label(QLabel):
@@ -22,7 +22,7 @@ class DataWidget(QWidget):
     def __init__(self, data: dict, parent=None):
         super().__init__(parent)
 
-        layout = QGridLayout()
+        layout = QHBoxLayout()
         layout.setSpacing(0)
         layout.setContentsMargins(0, 0, 0, 0)
         
@@ -33,9 +33,9 @@ class DataWidget(QWidget):
 
         self.unit_label = Label(data['unit'])
 
-        layout.addWidget(self.title, 0, 0, 1, 3)
-        layout.addWidget(self.data_spin_box, 0, 1, 1, 2)
-        layout.addWidget(self.unit_label, 0, 2, 1, 1)
+        layout.addWidget(self.title)
+        layout.addWidget(self.data_spin_box)
+        layout.addWidget(self.unit_label)
 
         
         self.setLayout(layout)
