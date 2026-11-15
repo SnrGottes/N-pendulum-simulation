@@ -1,8 +1,9 @@
 from PyQt6.QtWidgets import (
-    QWidget, QPushButton, QLabel, QScrollArea, QDoubleSpinBox,
-    QVBoxLayout, QHBoxLayout, QGridLayout
+    QWidget, QLabel, QDoubleSpinBox,
+    QHBoxLayout
 )
 
+# Custom Sub-Widget for Retrieving Data
 class DataSpinBox(QDoubleSpinBox):
     def __init__(self, values_data: dict, parent=None):
         super().__init__(parent)
@@ -11,13 +12,14 @@ class DataSpinBox(QDoubleSpinBox):
         self.setSingleStep(values_data['step'])
         self.setObjectName('data_spin_box')
 
+# Custom Label Sub-Widget
 class Label(QLabel):
     def __init__(self, text: str = '', parent=None):
         super().__init__(parent)
         self.setText(text)
         self.setObjectName('label')
         
-
+# A custom widget for retrieving and displaying data
 class DataWidget(QWidget):
     def __init__(self, data: dict, parent=None):
         super().__init__(parent)
