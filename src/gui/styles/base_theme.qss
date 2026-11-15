@@ -1,0 +1,5 @@
+#Panel {
+    border: 2px solid #FF5733;
+    border-radius: 8px;
+    background-color: #2B2B2B;
+}

@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QMainWindow, QHBoxLayout, QVBoxLayout, 
+    QMainWindow, QHBoxLayout, QVBoxLayout, QSplitter,
     QWidget, QScrollArea
 )
 
@@ -34,6 +34,7 @@ class MainWindow(QMainWindow):
         self.ButtonsPanel = ButtonsPanel(
             self.gui_settings['panels']['buttons_panel']
         )
+        
         self.GraphPanel = GraphPanel(
             self.gui_settings['panels']['graph_panel']
         )
@@ -47,21 +48,31 @@ class MainWindow(QMainWindow):
 
     def layout_configuration(self):
         # Creating and Configuring the Main Window Layout
-        central_widget = QWidget()
-        layout = QVBoxLayout(central_widget)
-        layout.setSpacing(0)
-        layout.setContentsMargins(0, 0, 0, 0)
+        splitter = QSplitter(Qt.Orientation.Vertical)
+        splitter.setChildrenCollapsible(False)
 
         # Adding Panels to the Main Layout
-        layout.addWidget(self.ButtonsPanel)
-        layout.addWidget(self.GraphPanel)
+        splitter.addWidget(self.ButtonsPanel)
+        splitter.addWidget(self.GraphPanel)
 
         # Creating and Configuring an Additional Layout
-        sub_layout = QHBoxLayout()
-        sub_layout.setSpacing(0)
-        sub_layout.setContentsMargins(0, 0, 0, 0)
+        sub_splitter = QSplitter(Qt.Orientation.Horizontal)
+        sub_splitter.setChildrenCollapsible(False)
 
-        # Creating and configuring the scroll area required for scrolling the date panel
+        # Creating and configuring the scroll area required for scrolling the pendulmum select panel
+        pendulmum_sroll_area = QScrollArea()
+        pendulmum_sroll_area.setWidgetResizable(True)
+
+        pendulmum_sroll_area.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+        pendulmum_sroll_area.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
+        )
+
+        pendulmum_sroll_area.setWidget(self.PendulmumSelectPanel)
+
+        # Creating and configuring the scroll area required for scrolling the data panel
         data_sroll_area = QScrollArea()
         data_sroll_area.setWidgetResizable(True)
 
@@ -75,9 +86,9 @@ class MainWindow(QMainWindow):
         data_sroll_area.setWidget(self.DataPanel)
 
         # Adding the remaining widgets and finalizing the main layout 
-        sub_layout.addWidget(self.PendulmumSelectPanel)
-        sub_layout.addWidget(data_sroll_area)
+        sub_splitter.addWidget(pendulmum_sroll_area)
+        sub_splitter.addWidget(data_sroll_area)
 
-        layout.addLayout(sub_layout)
+        splitter.addWidget(sub_splitter)
 
-        self.setCentralWidget(central_widget)
+        self.setCentralWidget(splitter)

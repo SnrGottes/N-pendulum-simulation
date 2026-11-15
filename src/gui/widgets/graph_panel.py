@@ -1,3 +1,4 @@
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget, QHBoxLayout
 )
@@ -13,3 +14,5 @@ class GraphPanel(QWidget):
             self.settings['width'],
             self.settings['height']
         )
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setObjectName("Panel")

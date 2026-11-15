@@ -1,7 +1,15 @@
 from PyQt6.QtWidgets import (
-    QWidget, QLabel, QDoubleSpinBox,
+    QWidget, QLabel, QDoubleSpinBox, QPushButton, QSizePolicy,
     QHBoxLayout
 )
+
+#
+class Button(QPushButton):
+    def __init__(self, text: str = '', parent = None):
+        super().__init__(parent)
+        self.setText(text)
+        self.setObjectName('button')
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
 # Custom Sub-Widget for Retrieving Data
 class DataSpinBox(QDoubleSpinBox):

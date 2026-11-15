@@ -1,3 +1,4 @@
+from PyQt6.QtCore import Qt
 from src.gui.widgets.widgets import DataWidget
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout
@@ -19,6 +20,8 @@ class DataPanel(QWidget):
             self.settings['width'],
             self.settings['height']
         )
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setObjectName("Panel")
 
     def layout_configuration(self):
         self.main_layout = QVBoxLayout()

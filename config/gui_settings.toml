@@ -1,6 +1,6 @@
 [main_window]
-width = 300
-height = 600
+width = 400
+height = 700
 title = '123'
 
 [panels.buttons_panel]
@@ -12,7 +12,7 @@ width = 300
 height = 300
 
 [panels.pendulmum_select_panel]
-width = 100
+width = 150
 height = 250
 
 [panels.data_panel]
