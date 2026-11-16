@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from src.gui.widgets.widgets import DataWidget
 from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout
+    QWidget, QVBoxLayout, QScrollArea
 )
 
 class DataPanel(QWidget):
@@ -24,9 +24,28 @@ class DataPanel(QWidget):
         self.setObjectName("Panel")
 
     def layout_configuration(self):
-        self.main_layout = QVBoxLayout()
+        #
+        outer_layout = QVBoxLayout(self)
+        outer_layout.setContentsMargins(4, 4, 4, 4)
 
-        self.setLayout(self.main_layout)
+        #
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+
+        self.scroll_area.setFrameShape(QScrollArea.Shape.NoFrame)
+        self.scroll_area.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+        self.scroll_area.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
+        )
+        outer_layout.addWidget(self.scroll_area)
+
+        #
+        self.content_widget = QWidget()
+        self.scroll_area.setWidget(self.content_widget)
+
+        self.main_layout = QVBoxLayout(self.content_widget)
 
     def adding_data_widgets(self):
         self.data_spin_boxes: dict = {} # Variable for storing added widgets
