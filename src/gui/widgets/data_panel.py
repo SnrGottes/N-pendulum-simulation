@@ -5,11 +5,12 @@ from PyQt6.QtWidgets import (
 )
 
 class DataPanel(QWidget):
-    def __init__(self, panel_settings: dict, sim_settings: dict, parent=None):
+    def __init__(self, panel_settings: dict, sim_settings: dict, pendulmum_name: str, parent=None):
         super().__init__(parent)
         # Saving Settings in self
         self.settings = panel_settings
         self.sim_settings = sim_settings
+        self.pendulmum_name = pendulmum_name
 
         self.panel_configuration()  # Main Widget Settings
         self.layout_configuration() # Creating and Configuring the Main Layout
@@ -52,7 +53,12 @@ class DataPanel(QWidget):
         # We go through the parameters and create a separate widget for each one
         for parm_name in self.sim_settings['pendulmum_parms_list']['list']:
             parm_data = self.sim_settings[parm_name]
-            data_spin_box = DataWidget(parm_data)
+
+            data_spin_box = DataWidget(
+                parm_data, 
+                self.sim_settings[self.pendulmum_name][parm_name]
+            )
+            
             self.data_spin_boxes.update({parm_name: data_spin_box})
             self.main_layout.addWidget(data_spin_box)
         

@@ -13,10 +13,10 @@ class Button(QPushButton):
 
 # Custom Sub-Widget for Retrieving Data
 class DataSpinBox(QDoubleSpinBox):
-    def __init__(self, values_data: dict, parent=None):
+    def __init__(self, values_data: dict, value: float, parent=None):
         super().__init__(parent)
         self.setRange(values_data['min_value'], values_data['max_value'])
-        self.setValue(values_data['value'])
+        self.setValue(value)
         self.setSingleStep(values_data['step'])
         self.setObjectName('data_spin_box')
 
@@ -29,7 +29,7 @@ class Label(QLabel):
         
 # A custom widget for retrieving and displaying data
 class DataWidget(QWidget):
-    def __init__(self, data: dict, parent=None):
+    def __init__(self, data: dict, value: float, parent=None):
         super().__init__(parent)
 
         layout = QHBoxLayout()
@@ -39,7 +39,7 @@ class DataWidget(QWidget):
         self.title = Label(data['title'])
         self.title.setToolTip(data['tool_tip'])
 
-        self.data_spin_box = DataSpinBox(data['values'])
+        self.data_spin_box = DataSpinBox(data['values'], value)
 
         self.unit_label = Label(data['unit'])
 

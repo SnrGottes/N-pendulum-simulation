@@ -43,7 +43,8 @@ class MainWindow(QMainWindow):
         )
         self.DataPanel = DataPanel(
             self.gui_settings['panels']['data_panel'],
-            self.sim_settings
+            self.sim_settings,
+            self.sim_settings['pendulmums_list']['list'][0]
         )
 
     def layout_configuration(self):
@@ -59,21 +60,8 @@ class MainWindow(QMainWindow):
         sub_splitter = QSplitter(Qt.Orientation.Horizontal)
         sub_splitter.setChildrenCollapsible(False)
 
-        # Creating and configuring the scroll area required for scrolling the pendulmum select panel
-        pendulmum_sroll_area = QScrollArea()
-        pendulmum_sroll_area.setWidgetResizable(True)
-
-        pendulmum_sroll_area.setHorizontalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
-        )
-        pendulmum_sroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAsNeeded
-        )
-
-        pendulmum_sroll_area.setWidget(self.PendulmumSelectPanel)
-
         # Adding the remaining widgets and finalizing the main layout 
-        sub_splitter.addWidget(pendulmum_sroll_area)
+        sub_splitter.addWidget(self.PendulmumSelectPanel)
         sub_splitter.addWidget(self.DataPanel)
 
         splitter.addWidget(sub_splitter)

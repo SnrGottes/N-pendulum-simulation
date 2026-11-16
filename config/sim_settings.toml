@@ -1,3 +1,15 @@
+[pendulmums_list]
+list = [
+    'pendulmum_1',
+    'pendulmum_2'
+]
+
+[pendulmum_1]
+number_of_links = 2
+
+[pendulmum_2]
+number_of_links = 4
+
 [pendulmum_parms_list]
 list = [
     'number_of_links'
@@ -6,9 +18,8 @@ list = [
 [number_of_links]
 title = 'Number of links'
 tool_tip = 'The number of links the selected pendulum will have'
-unit = ''
+unit = '1'
 [number_of_links.values]
-value = 2
 min_value = 1
 max_value = 4
 step = 1
