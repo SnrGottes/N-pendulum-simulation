@@ -39,7 +39,8 @@ class MainWindow(QMainWindow):
             self.gui_settings['panels']['graph_panel']
         )
         self.PendulmumSelectPanel = PendulmumSelectPanel(
-            self.gui_settings['panels']['pendulmum_select_panel']
+            self.gui_settings['panels']['pendulmum_select_panel'],
+            self.sim_settings,
         )
         self.DataPanel = DataPanel(
             self.gui_settings['panels']['data_panel'],

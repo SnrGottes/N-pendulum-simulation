@@ -1,3 +1,4 @@
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QWidget, QLabel, QDoubleSpinBox, QPushButton, QSizePolicy,
     QHBoxLayout
@@ -8,7 +9,7 @@ class Button(QPushButton):
     def __init__(self, text: str = '', parent = None):
         super().__init__(parent)
         self.setText(text)
-        self.setObjectName('button')
+        self.setObjectName('Button')
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
 # Custom Sub-Widget for Retrieving Data
@@ -26,6 +27,50 @@ class Label(QLabel):
         super().__init__(parent)
         self.setText(text)
         self.setObjectName('label')
+
+#
+class PendulmumWidget(QWidget):
+    def __init__(self, height: int, color: str = '#fff', title: str = '', parent = None):
+        super().__init__(parent)
+
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setFixedHeight(height)
+
+        layout = QHBoxLayout()
+        layout.setSpacing(0)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.button = Button(title)
+        self.button.setObjectName('Pendulmum_button')
+        self.button.setStyleSheet(self.button.styleSheet() + f'''
+            color: {color}; 
+            border: 2px solid {color}
+        ''')
+        layout.addWidget(self.button)
+        self.setLayout(layout)
+
+#
+class NeuPendulmumWidget(QWidget):
+    def __init__(self, height: int, parent = None):
+        super().__init__(parent)
+
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setFixedHeight(height)
+
+        layout = QHBoxLayout()
+        layout.setSpacing(0)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.button = Button('+')
+        self.button.setObjectName('Pendulmum_button')
+        self.button.setStyleSheet(self.button.styleSheet() + f'''
+            color: #aaa; 
+            border: 2px solid #aaa;
+            font-weight: bold;
+            font-size: 14px;
+        ''')
+        layout.addWidget(self.button)
+        self.setLayout(layout)
         
 # A custom widget for retrieving and displaying data
 class DataWidget(QWidget):

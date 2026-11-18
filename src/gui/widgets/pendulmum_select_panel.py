@@ -1,13 +1,20 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
-    QWidget, QHBoxLayout, QScrollArea
+    QWidget, QVBoxLayout, QScrollArea
+)
+from src.gui.widgets.widgets import (
+    PendulmumWidget,
+    NeuPendulmumWidget
 )
 
 class PendulmumSelectPanel(QWidget):
-    def __init__(self, panel_settings: dict, parent=None):
+    def __init__(self, panel_settings: dict, sim_settings: dict, parent=None):
         super().__init__(parent)
         self.settings = panel_settings
+        self.sim_settings = sim_settings
         self.panel_configuration()
+        self.layout_configuration()
+        self.adding_pendulmum_widgets()
 
     def panel_configuration(self):
         self.setMinimumSize(
@@ -19,7 +26,7 @@ class PendulmumSelectPanel(QWidget):
 
     def layout_configuration(self):
         #
-        outer_layout = QHBoxLayout(self)
+        outer_layout = QVBoxLayout(self)
         outer_layout.setContentsMargins(4, 4, 4, 4)
 
         #
@@ -39,4 +46,23 @@ class PendulmumSelectPanel(QWidget):
         self.content_widget = QWidget()
         self.scroll_area.setWidget(self.content_widget)
 
-        self.main_layout = QHBoxLayout(self.content_widget)
+        self.main_layout = QVBoxLayout(self.content_widget)
+
+    def adding_pendulmum_widgets(self):
+        PROPORTION_WIDGET_HEIGHT = 7
+        self.pendulmum_widgets: dict = {}
+        for pendulmum_name in self.sim_settings['pendulmums_list']['list']:
+            pendulmum_widget = PendulmumWidget(
+                int(self.settings['height']/PROPORTION_WIDGET_HEIGHT),
+                self.sim_settings[pendulmum_name]['color'],
+                pendulmum_name
+            )
+            self.main_layout.addWidget(pendulmum_widget)
+            self.pendulmum_widgets.update({pendulmum_name: pendulmum_widget})
+
+        self.neu_pendulmum_widget = NeuPendulmumWidget(
+            int(self.settings['height']/PROPORTION_WIDGET_HEIGHT)
+        )
+
+        self.main_layout.addWidget(self.neu_pendulmum_widget)
+        self.main_layout.addStretch()

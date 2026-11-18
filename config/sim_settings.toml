@@ -5,9 +5,11 @@ list = [
 ]
 
 [pendulmum_1]
+color = '#4444ff'
 number_of_links = 2
 
 [pendulmum_2]
+color = '#ff4444'
 number_of_links = 4
 
 [pendulmum_parms_list]
