@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QScrollArea
 )
@@ -8,6 +8,8 @@ from src.gui.widgets.widgets import (
 )
 
 class PendulmumSelectPanel(QWidget):
+    signal = pyqtSignal(str)
+
     def __init__(self, panel_settings: dict, sim_settings: dict, parent=None):
         super().__init__(parent)
         self.settings = panel_settings
@@ -57,6 +59,9 @@ class PendulmumSelectPanel(QWidget):
                 self.sim_settings[pendulmum_name]['color'],
                 pendulmum_name
             )
+
+            pendulmum_widget.pendulmum_selected_signal.connect(self.on_pendulmum_clicked)
+
             self.main_layout.addWidget(pendulmum_widget)
             self.pendulmum_widgets.update({pendulmum_name: pendulmum_widget})
 
@@ -66,3 +71,7 @@ class PendulmumSelectPanel(QWidget):
 
         self.main_layout.addWidget(self.neu_pendulmum_widget)
         self.main_layout.addStretch()
+
+    def on_pendulmum_clicked(self, name: str):
+        print(f"Select pendulmum: {name}")
+        self.signal.emit(name)

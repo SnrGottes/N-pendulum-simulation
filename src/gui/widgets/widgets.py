@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import (
     QWidget, QLabel, QDoubleSpinBox, QPushButton, QSizePolicy,
     QHBoxLayout
@@ -30,8 +30,10 @@ class Label(QLabel):
 
 #
 class PendulmumWidget(QWidget):
+    pendulmum_selected_signal = pyqtSignal(str)
     def __init__(self, height: int, color: str = '#fff', title: str = '', parent = None):
         super().__init__(parent)
+        self.pendulmum_name = title
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setFixedHeight(height)
@@ -40,14 +42,18 @@ class PendulmumWidget(QWidget):
         layout.setSpacing(0)
         layout.setContentsMargins(0, 0, 0, 0)
 
-        self.button = Button(title)
+        self.button = Button(self.pendulmum_name)
         self.button.setObjectName('Pendulmum_button')
+        self.button.clicked.connect(self.pendulmum_selected)
         self.button.setStyleSheet(self.button.styleSheet() + f'''
             color: {color}; 
             border: 2px solid {color}
         ''')
         layout.addWidget(self.button)
         self.setLayout(layout)
+
+    def pendulmum_selected(self):
+        self.pendulmum_selected_signal.emit(self.pendulmum_name)
 
 #
 class NeuPendulmumWidget(QWidget):

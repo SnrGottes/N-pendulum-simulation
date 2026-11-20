@@ -63,4 +63,16 @@ class DataPanel(QWidget):
             self.main_layout.addWidget(data_spin_box)
         
         self.main_layout.addStretch()
-            
+
+    def update_pendulmum(self, neu_pendulmum_name: str):
+        self.pendulmum_name = neu_pendulmum_name
+        self.data_spin_boxes.clear()
+
+        while self.main_layout.count():
+            item = self.main_layout.takeAt(self.main_layout.count() - 1)
+            widget = item.widget()
+        
+        if widget is not None:
+            widget.deleteLater()
+        
+        self.adding_data_widgets()

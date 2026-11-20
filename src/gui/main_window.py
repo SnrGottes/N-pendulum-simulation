@@ -48,6 +48,8 @@ class MainWindow(QMainWindow):
             self.sim_settings['pendulmums_list']['list'][0]
         )
 
+        self.PendulmumSelectPanel.signal.connect(self.DataPanel.update_pendulmum)
+
     def layout_configuration(self):
         # Creating and Configuring the Main Window Layout
         splitter = QSplitter(Qt.Orientation.Vertical)
